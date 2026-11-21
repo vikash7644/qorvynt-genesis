@@ -5,10 +5,10 @@ import { spawnSync } from "node:child_process";
 import assert from "node:assert/strict";
 
 const html = readFileSync("index.html", "utf8");
-for (const id of ["game", "begin", "scan", "jump", "touch", "minimap", "count", "state"]) {
+for (const id of ["game", "begin", "scan", "jump", "touch", "count", "state"]) {
   assert.match(html, new RegExp('id="' + id + '"'), "Missing required UI element: " + id);
 }
-for (const feature of ["three.module.js", "Genesis Collapse", "FRONTIER RADAR", "fragPositions", "drawRadar", "pointerdown", "KeyW", "Space"]) {
+for (const feature of ["three.module.js", "Genesis Collapse", "fragPositions", "pointerdown", "KeyW", "Space", "const obstacles=[]", "obstacles.push({x,z,r:.72*s+.45})", "const blocked=(x,z)=>obstacles.some"]) {
   assert.ok(html.includes(feature), "Missing game feature marker: " + feature);
 }
 const openTag = '<script type="module">';
