@@ -70,3 +70,5 @@ Progress is saved locally in the browser using `localStorage`: Genesis Credits, 
 - Once all five Genesis fragments are recovered and the three hostile drones are neutralized, the Ancient Warden awakens at the ruins.
 - The Warden has a 24-point core, pursues the player, and launches a close-range shockwave. Pulse attacks damage it; defeating it awards 500 Genesis Credits.
 - The minimap marks the awakened Warden. The encounter is a scripted first boss prototype, not yet a full multi-phase raid.
+
+- The Warden's remaining core health and defeat state are also stored in the browser save, so a reload does not erase boss progress.
