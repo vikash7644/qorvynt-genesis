@@ -8,7 +8,7 @@ const html = readFileSync("index.html", "utf8");
 for (const id of ["game", "begin", "scan", "jump", "touch", "count", "state"]) {
   assert.match(html, new RegExp('id="' + id + '"'), "Missing required UI element: " + id);
 }
-for (const feature of ["three.module.js", "Genesis Collapse", "fragPositions", "pointerdown", "KeyW", "Space", "const obstacles=[]", "obstacles.push({x,z,r:.72*s+.45})", "const blocked=(x,z)=>obstacles.some"]) {
+for (const feature of ["three.module.js", "Genesis Collapse", "fragPositions", "pointerdown", "KeyW", "Space", "const obstacles=[]", "obstacles.push({x,z,r:.72*s+.45})", "const blocked=(x,z)=>obstacles.some", "id=\"staminaFill\"", "const wantsSprint=", "legs[0].rotation.x"]) {
   assert.ok(html.includes(feature), "Missing game feature marker: " + feature);
 }
 const openTag = '<script type="module">';
