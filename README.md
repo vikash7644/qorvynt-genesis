@@ -50,7 +50,7 @@ MIT
 - Recovering a Genesis fragment awards **75 GC**; neutralizing a hostile drone awards **50 GC**.
 - Open the **SHOP** in-game to buy an Emergency Medkit (60 GC), Pulse Amplifier (180 GC), or Reinforced Armor (150 GC).
 - A medkit restores 45 suit vitals, the pulse upgrade increases damage, and armor reduces incoming damage.
-- If the suit fails, the player loses 20% of carried credits before redeployment. Credits and upgrades currently reset when the page is reloaded; persistent saves are a future milestone.
+- If the suit fails, the player loses 20% of carried credits before redeployment. Credits and upgrades persist in this browser through local saves; see Persistent frontier saves below.
 
 
 ## Persistent frontier saves
