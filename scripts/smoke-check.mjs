@@ -5,10 +5,14 @@ import { spawnSync } from "node:child_process";
 import assert from "node:assert/strict";
 
 const html = readFileSync("index.html", "utf8");
-for (const id of ["game", "begin", "scan", "jump", "touch", "count", "state"]) {
+for (const id of ["game", "begin", "scan", "jump", "touch", "count", "state", "hostiles", "healthFill", "staminaFill", "attack"]) {
   assert.match(html, new RegExp('id="' + id + '"'), "Missing required UI element: " + id);
 }
-for (const feature of ["three.module.js", "Genesis Collapse", "fragPositions", "pointerdown", "KeyW", "Space", "const obstacles=[]", "obstacles.push({x,z,r:.72*s+.45})", "const blocked=(x,z)=>obstacles.some", "id=\"staminaFill\"", "const enemies=[]", "function attack()", "id=\\"healthFill\\"", "id=\\"hostiles\\"", "id=\\"attack\\"", "const wantsSprint=", "legs[0].rotation.x"]) {
+for (const feature of [
+  "three.module.js", "Genesis Collapse", "fragPositions", "pointerdown", "KeyW", "KeyF", "Space",
+  "const obstacles=[]", "const blocked=(x,z)=>obstacles.some", "const enemies=[]", "function attack()",
+  "HOSTILE NEUTRALIZED", "damageCooldown", "healthFill", "staminaFill", "const wantsSprint=", "legs[0].rotation.x"
+]) {
   assert.ok(html.includes(feature), "Missing game feature marker: " + feature);
 }
 const openTag = '<script type="module">';
