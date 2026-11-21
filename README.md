@@ -63,3 +63,10 @@ Progress is saved locally in the browser using `localStorage`: Genesis Credits, 
 - Residents make their own lightweight AI decisions: follow role-based daytime routines, gather near the campfire after dusk, rest when tired, watch the player when approached, and take cover when hostile drones come close.
 - Walk near a resident and press **H** or **TALK** to learn their current role and decision.
 - This is a first autonomous-NPC prototype using procedural Three.js characters and behavior state machines; it is not yet a full dialogue, quest, or generative-AI system.
+
+
+## Living frontier and the Ancient Warden
+- Seven roaming wildlife creatures forage across the terrain and flee when the explorer approaches.
+- Once all five Genesis fragments are recovered and the three hostile drones are neutralized, the Ancient Warden awakens at the ruins.
+- The Warden has a 24-point core, pursues the player, and launches a close-range shockwave. Pulse attacks damage it; defeating it awards 500 Genesis Credits.
+- The minimap marks the awakened Warden. The encounter is a scripted first boss prototype, not yet a full multi-phase raid.
