@@ -5,13 +5,13 @@ import { spawnSync } from "node:child_process";
 import assert from "node:assert/strict";
 
 const html = readFileSync("index.html", "utf8");
-for (const id of ["game", "begin", "scan", "jump", "touch", "count", "state", "hostiles", "healthFill", "staminaFill", "attack"]) {
+for (const id of ["game", "begin", "scan", "jump", "touch", "count", "state", "hostiles", "healthFill", "staminaFill", "attack", "drive"]) {
   assert.match(html, new RegExp('id="' + id + '"'), "Missing required UI element: " + id);
 }
 for (const feature of [
   "three.module.js", "Genesis Collapse", "fragPositions", "pointerdown", "KeyW", "KeyF", "Space",
   "const obstacles=[]", "const blocked=(x,z)=>obstacles.some", "const enemies=[]", "function attack()",
-  "HOSTILE NEUTRALIZED", "function updateMission()", "missionTitle", "missionText", "gameOver=false", "REDEPLOY", "damageCooldown", "healthFill", "staminaFill", "const wantsSprint=", "legs[0].rotation.x"
+  "HOSTILE NEUTRALIZED", "function updateMission()", "missionTitle", "missionText", "gameOver=false", "REDEPLOY", "damageCooldown", "healthFill", "staminaFill", "const wantsSprint=", "legs[0].rotation.x", "Genesis X-1", "function toggleDrive()", "wheels.forEach", "KeyG"
 ]) {
   assert.ok(html.includes(feature), "Missing game feature marker: " + feature);
 }
