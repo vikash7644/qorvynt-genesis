@@ -30,3 +30,9 @@ This is the first playable 3D vertical slice: procedural terrain, forest and roc
 ## License
 
 MIT
+
+
+## Combat prototype
+- Three hostile drones patrol and pursue the player when nearby.
+- Use `F` or the **PULSE** button at close range; each drone takes three hits to neutralize.
+- The Genesis suit has a vitals bar and takes damage when a drone reaches melee range.
