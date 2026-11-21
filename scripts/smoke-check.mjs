@@ -5,13 +5,13 @@ import { spawnSync } from "node:child_process";
 import assert from "node:assert/strict";
 
 const html = readFileSync("index.html", "utf8");
-for (const id of ["game", "begin", "scan", "jump", "touch", "count", "state", "hostiles", "healthFill", "staminaFill", "attack", "drive", "minimap", "minimapCanvas", "objectiveReadout"]) {
+for (const id of ["game", "begin", "scan", "jump", "touch", "count", "state", "hostiles", "healthFill", "staminaFill", "attack", "drive", "minimap", "minimapCanvas", "objectiveReadout", "credits", "shopToggle", "shopPanel", "shopCredits", "buyMedkit", "buyPulse", "buyArmor", "shopClose"]) {
   assert.match(html, new RegExp('id="' + id + '"'), "Missing required UI element: " + id);
 }
 for (const feature of [
   "three.module.js", "Genesis Collapse", "fragPositions", "pointerdown", "KeyW", "KeyF", "Space",
   "const obstacles=[]", "const blocked=(x,z)=>obstacles.some", "const enemies=[]", "function attack()",
-  "HOSTILE NEUTRALIZED", "function updateMission()", "missionTitle", "missionText", "gameOver=false", "REDEPLOY", "damageCooldown", "healthFill", "staminaFill", "const wantsSprint=", "legs[0].rotation.x", "Genesis X-1", "function toggleDrive()", "activeWheels.forEach", "KeyG", "Vesper S-7", "bikeWheels", "activeVehicle.position.set", "function drawMinimap()", "FRONTIER RADAR", "drawMinimap();renderer.render", "function updateObjective()", "GENESIS FRAGMENT", "HOSTILE DRONE", "ANCIENT RUINS", "objectiveReadout"
+  "HOSTILE NEUTRALIZED", "function updateMission()", "missionTitle", "missionText", "gameOver=false", "REDEPLOY", "damageCooldown", "healthFill", "staminaFill", "const wantsSprint=", "legs[0].rotation.x", "Genesis X-1", "function toggleDrive()", "activeWheels.forEach", "KeyG", "Vesper S-7", "bikeWheels", "activeVehicle.position.set", "function drawMinimap()", "FRONTIER RADAR", "drawMinimap();renderer.render", "function updateObjective()", "GENESIS FRAGMENT", "HOSTILE DRONE", "ANCIENT RUINS", "objectiveReadout", "FRONTIER BLACK MARKET", "Genesis Credits", "function refreshWallet()", "function reward(amount,reason)", "function buy(cost,apply,success)", "HOSTILE NEUTRALIZED", "pulseDamage", "armorLevel", "const lost=Math.floor(credits*.2)"
 ]) {
   assert.ok(html.includes(feature), "Missing game feature marker: " + feature);
 }
