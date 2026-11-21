@@ -11,7 +11,7 @@ for (const id of ["game", "begin", "scan", "jump", "touch", "count", "state", "h
 for (const feature of [
   "three.module.js", "Genesis Collapse", "fragPositions", "pointerdown", "KeyW", "KeyF", "Space",
   "const obstacles=[]", "const blocked=(x,z)=>obstacles.some", "const enemies=[]", "function attack()",
-  "HOSTILE NEUTRALIZED", "function updateMission()", "missionTitle", "missionText", "gameOver=false", "REDEPLOY", "damageCooldown", "healthFill", "staminaFill", "const wantsSprint=", "legs[0].rotation.x", "Genesis X-1", "function toggleDrive()", "wheels.forEach", "KeyG"
+  "HOSTILE NEUTRALIZED", "function updateMission()", "missionTitle", "missionText", "gameOver=false", "REDEPLOY", "damageCooldown", "healthFill", "staminaFill", "const wantsSprint=", "legs[0].rotation.x", "Genesis X-1", "function toggleDrive()", "wheels.forEach", "KeyG", "Vesper S-7", "bikeWheels", "activeVehicle.position.set"
 ]) {
   assert.ok(html.includes(feature), "Missing game feature marker: " + feature);
 }
