@@ -36,3 +36,10 @@ MIT
 - Three hostile drones patrol and pursue the player when nearby.
 - Use `F` or the **PULSE** button at close range; each drone takes three hits to neutralize.
 - The Genesis suit has a vitals bar and takes damage when a drone reaches melee range.
+
+
+## Original vehicle prototype
+- Added the original procedural **Genesis X-1** six-wheel frontier rover, built from Three.js geometry (not a borrowed game asset).
+- Walk within 5.5 world units and press **G** or **DRIVE** to enter; press **G** or **EXIT** to leave.
+- Driving uses faster movement, vehicle-follow camera framing, rotating wheels, collision clearance, and mobile touch controls.
+- Exit the rover to use the scan interaction. This is an early prototype vehicle, not a finished production vehicle model.
