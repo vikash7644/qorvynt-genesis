@@ -72,3 +72,10 @@ Progress is saved locally in the browser using `localStorage`: Genesis Credits, 
 - The minimap marks the awakened Warden. The encounter is a scripted first boss prototype, not yet a full multi-phase raid.
 
 - The Warden's remaining core health and defeat state are also stored in the browser save, so a reload does not erase boss progress.
+
+
+## Salvage drops and ancient core loot
+- Neutralized hostile drones drop glowing salvage caches worth **35 GC** each; walk within 2.8 world units to collect them.
+- Defeating the Ancient Warden creates a rare Genesis Core cache worth **250 GC**, in addition to the 500 GC boss reward.
+- Uncollected drops are restored after a reload. Collected drop IDs are saved locally so recovered caches do not respawn on the same browser/device.
+- Loot locations appear on the frontier minimap. These are fictional in-game rewards with no real-money value.
