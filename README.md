@@ -43,3 +43,11 @@ MIT
 - Walk within 5.5 world units and press **G** or **DRIVE** to enter; press **G** or **EXIT** to leave.
 - Driving uses faster movement, vehicle-follow camera framing, rotating wheels, collision clearance, and mobile touch controls.
 - Exit the rover to use the scan interaction. This is an early prototype vehicle, not a finished production vehicle model.
+
+
+## Genesis Credits and frontier economy
+- Start with **250 Genesis Credits (GC)**, a fictional in-game currency with no real-money value.
+- Recovering a Genesis fragment awards **75 GC**; neutralizing a hostile drone awards **50 GC**.
+- Open the **SHOP** in-game to buy an Emergency Medkit (60 GC), Pulse Amplifier (180 GC), or Reinforced Armor (150 GC).
+- A medkit restores 45 suit vitals, the pulse upgrade increases damage, and armor reduces incoming damage.
+- If the suit fails, the player loses 20% of carried credits before redeployment. Credits and upgrades currently reset when the page is reloaded; persistent saves are a future milestone.
