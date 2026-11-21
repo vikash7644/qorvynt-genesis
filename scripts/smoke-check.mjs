@@ -11,10 +11,13 @@ for (const id of ["game", "begin", "scan", "jump", "touch", "minimap", "count", 
 for (const feature of ["three.module.js", "Genesis Collapse", "FRONTIER RADAR", "fragPositions", "drawRadar", "pointerdown", "KeyW", "Space"]) {
   assert.ok(html.includes(feature), "Missing game feature marker: " + feature);
 }
-const match = html.match(/<script type="module">([\\s\\S]*?)<\\/script>/);
-assert.ok(match, "Could not find the game module script");
+const openTag = '<script type="module">';
+const start = html.indexOf(openTag);
+const end = html.indexOf("</script>", start + openTag.length);
+assert.ok(start >= 0 && end > start, "Could not find the game module script");
+const moduleSource = html.slice(start + openTag.length, end);
 const temp = join(tmpdir(), "qorvynt-genesis-check.mjs");
-writeFileSync(temp, match[1]);
+writeFileSync(temp, moduleSource);
 const check = spawnSync(process.execPath, ["--check", temp], { encoding: "utf8" });
 unlinkSync(temp);
 assert.equal(check.status, 0, check.stderr || "JavaScript syntax check failed");
