@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07151c">
+<title>QORVYNT Character Lab — Genesis</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#07151c;color:#e7f5f3}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 0,#17333b 0,#07151c 58%);overflow-x:hidden}
+header{padding:18px clamp(16px,4vw,42px);border-bottom:1px solid #28434b;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-weight:900;letter-spacing:.12em}.brand span{color:#74f0dd}.tag{font-size:11px;color:#8da9ad;letter-spacing:.16em}
+main{max-width:1180px;margin:auto;padding:22px clamp(14px,3vw,32px) 42px}
+h1{font-size:clamp(26px,5vw,46px);margin:10px 0 8px;letter-spacing:-.04em}p{color:#a9c2c2;line-height:1.55}
+.layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(270px,.8fr);gap:18px;margin-top:22px}
+.stage{position:relative;min-height:420px;height:min(66vh,680px);background:linear-gradient(160deg,#152c34,#0b171d);border:1px solid #29464e;border-radius:18px;overflow:hidden}
+canvas{display:block;width:100%;height:100%}.overlay{position:absolute;left:16px;top:14px;font-size:11px;letter-spacing:.12em;color:#92c4c0;pointer-events:none}
+.panel{background:#0d2027;border:1px solid #29464e;border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.panel h2{font-size:16px;margin:0}.small{font-size:12px;color:#91aaad}
+.file{display:block;border:1px dashed #4a7779;border-radius:12px;padding:18px;text-align:center;background:#112a31;cursor:pointer}
+.file input{display:block;width:100%;margin-top:12px;color:#b8cece;font-size:12px}
+button{border:1px solid #38616a;background:#183740;color:#dffdfa;padding:10px 12px;border-radius:10px;font-weight:700;cursor:pointer}
+button:disabled{opacity:.4;cursor:not-allowed}button.active{background:#176d66;border-color:#68d9c9}
+.controls{display:flex;flex-wrap:wrap;gap:8px}.status{padding:12px;border-radius:10px;background:#09181e;color:#a9c2c2;font-size:12px;line-height:1.5;min-height:44px;overflow-wrap:anywhere}
+.stat{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stat div{background:#09181e;padding:10px;border-radius:10px}.stat b{display:block;font-size:18px}.stat span{font-size:10px;color:#90aaad;letter-spacing:.08em}
+footer{margin-top:18px;color:#718f93;font-size:11px;line-height:1.6}
+@media(max-width:780px){.layout{grid-template-columns:1fr}.stage{height:54vh;min-height:340px}.panel{order:2}}
+</style>
+</head>
+<body>
+<header><div class="brand">QORVYNT <span>✳</span> GENESIS</div><div class="tag">CHARACTER ASSET LAB · GLB / GLTF 2.0</div></header>
+<main>
+<h1>Bring a character to life.</h1>
+<p>Load a rigged GLB character, inspect its skeleton, and preview semantic animation clips through the QORVYNT character runtime.</p>
+<div class="layout">
+<section class="stage" id="stage"><div class="overlay">REAL-TIME 3D PREVIEW · WEBGL</div></section>
+<aside class="panel">
+<h2>Character asset</h2>
+<label class="file">Select a rigged .GLB file
+<input id="asset" type="file" accept=".glb,model/gltf-binary">
+</label>
+<div class="small">Use a GLB exported with a skinned mesh and animation clips. Keep files under 100 MB for mobile browsers.</div>
+<div class="status" id="status" role="status">Engine loading…</div>
+<div><h2>Animation states</h2><div class="controls" id="clips"><button disabled>Waiting for model</button></div></div>
+<div class="stat"><div><b id="boneCount">—</b><span>SKELETON BONES</span></div><div><b id="clipCount">—</b><span>ANIMATION STATES</span></div></div>
+<button id="spin" class="active" type="button">Auto rotate: ON</button>
+<button id="reset" type="button">Reset camera</button>
+<footer>QORVYNT validates skin data, discovers named clips, scales the model to a consistent height and cross-fades semantic animation states. This lab runs locally in your browser; selected files are not uploaded to a server.</footer>
+</aside>
+</div>
+</main>
+<script type="module">
+const statusEl=document.querySelector("#status");
+const stage=document.querySelector("#stage");
+let THREE,renderer,scene,camera,clock,character=null,activeUrl=null,autoRotate=true,loadToken=0;
+const setStatus=(message)=>{statusEl.textContent=message};
+try{
+  try{THREE=await import("https://esm.sh/three@0.160.0")}catch(e){THREE=await import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js")}
+  const {loadQorvyntGLTFCharacter}=await import("./engine/qorvynt-gltf-pipeline.js");
+  window.loadQorvyntGLTFCharacter=loadQorvyntGLTFCharacter;
+  scene=new THREE.Scene();scene.background=new THREE.Color(0x0b1a20);
+  camera=new THREE.PerspectiveCamera(42,1,.1,100);camera.position.set(4,2.7,6);
+  renderer=new THREE.WebGLRenderer({antialias:false,alpha:false,powerPreference:"low-power"});
+  renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));renderer.outputColorSpace=THREE.SRGBColorSpace;
+  stage.appendChild(renderer.domElement);
+  scene.add(new THREE.HemisphereLight(0xc8f5f0,0x23333a,2.1));
+  const key=new THREE.DirectionalLight(0xffe3bd,3.0);key.position.set(-4,8,5);scene.add(key);
+  const rim=new THREE.DirectionalLight(0x51dcca,1.8);rim.position.set(4,3,-5);scene.add(rim);
+  const floor=new THREE.Mesh(new THREE.CircleGeometry(4,64),new THREE.MeshStandardMaterial({color:0x132a31,metalness:.25,roughness:.8}));
+  floor.rotation.x=-Math.PI/2;floor.position.y=-.025;scene.add(floor);
+  const grid=new THREE.GridHelper(8,32,0x28545a,0x1b3a40);grid.position.y=-.018;scene.add(grid);
+  clock=new THREE.Clock();
+  const resize=()=>{const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false)};
+  new ResizeObserver(resize).observe(stage);resize();
+  document.querySelector("#asset").addEventListener("change",async(event)=>{
+    const file=event.target.files?.[0];if(!file)return;
+    if(!file.name.toLowerCase().endsWith(".glb")){setStatus("Please select a .glb file. For external textures and buffers, export as a self-contained GLB.");return}
+    if(file.size>100*1024*1024){setStatus("File exceeds the 100 MB mobile preview limit.");return}
+    const token=++loadToken;setStatus("Loading and validating "+file.name+"…");
+    const url=URL.createObjectURL(file);
+    try{
+      const next=await loadQorvyntGLTFCharacter(THREE,url,{name:file.name,targetHeight:3});
+      if(token!==loadToken){next.dispose();URL.revokeObjectURL(url);return}
+      if(character){scene.remove(character.root);character.dispose()}
+      if(activeUrl)URL.revokeObjectURL(activeUrl);
+      activeUrl=url;character=next;scene.add(character.root);
+      document.querySelector("#boneCount").textContent=String(character.boneNames.size);
+      document.querySelector("#clipCount").textContent=String(character.actions.size);
+      const controls=document.querySelector("#clips");controls.replaceChildren();
+      for(const [name] of character.actions){
+        const button=document.createElement("button");button.type="button";button.textContent=name.toUpperCase();
+        button.addEventListener("click",()=>{character.play(name,.18);controls.querySelectorAll("button").forEach(x=>x.classList.toggle("active",x===button))});
+        controls.appendChild(button);
+      }
+      const first=controls.querySelector("button");if(first)first.classList.add("active");
+      const box=new THREE.Box3().setFromObject(character.root);const size=box.getSize(new THREE.Vector3());
+      camera.position.set(Math.max(3,size.y*1.1),Math.max(2,size.y*.8),Math.max(4,size.y*1.7));camera.lookAt(0,size.y*.48,0);
+      setStatus("Loaded "+file.name+" · "+character.boneNames.size+" bones · "+character.actions.size+" supported animation states.");
+    }catch(error){URL.revokeObjectURL(url);setStatus("Asset rejected: "+(error?.message||String(error)))}
+  });
+  document.querySelector("#spin").addEventListener("click",()=>{autoRotate=!autoRotate;const b=document.querySelector("#spin");b.textContent="Auto rotate: "+(autoRotate?"ON":"OFF");b.classList.toggle("active",autoRotate)});
+  document.querySelector("#reset").addEventListener("click",()=>{camera.position.set(4,2.7,6);camera.lookAt(0,1.4,0)});
+  function frame(){requestAnimationFrame(frame);const dt=Math.min(clock.getDelta(),.05);if(character){character.update(dt);if(autoRotate)character.root.rotation.y+=dt*.22}renderer.render(scene,camera)}
+  frame();setStatus("Ready. Choose a rigged GLB character to begin.");
+}catch(error){setStatus("Engine startup failed: "+(error?.message||String(error)))}
+</script>
+</body>
+</html>
