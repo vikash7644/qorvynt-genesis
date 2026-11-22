@@ -1,7 +1,7 @@
 # QORVYNT: Genesis — first character animation authoring manifest
 # Executable QORVYNT data using the current map/array value model.
-# Browser runtime and GLB import adapter now exist; this QORVYNT profile is
-# still a source-authored contract, not yet the runtime's parsed input.
+# Genesis reads this source profile to configure the live GLB character importer.
+# The browser reader supports the define/map/array authoring subset, not QVM bytecode.
 
 define humanoid_rig := map("root", "Hips", "spine", "Spine", "head", "Head", "left_arm", "LeftUpperArm", "right_arm", "RightUpperArm", "left_forearm", "LeftForearm", "right_forearm", "RightForearm", "left_leg", "LeftUpperLeg", "right_leg", "RightUpperLeg", "left_shin", "LeftLowerLeg", "right_shin", "RightLowerLeg", "left_foot", "LeftFoot", "right_foot", "RightFoot")
 
