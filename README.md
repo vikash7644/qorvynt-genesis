@@ -86,3 +86,8 @@ The world rules file lives at `world/genesis.qv`. The browser currently reads a 
 
 **Important implementation boundary:** this is an early QORVYNT rules bridge, not the full QORVYNT compiler, bytecode VM, or self-hosted runtime. The `.qv` file is not yet compiled by the language toolchain in this game. The smoke check verifies required integration markers and JavaScript syntax; it does not prove runtime behavior on every Android device. The next integration milestone is to export a stable compiler/runtime interface from the separate QORVYNT language project and replace this small parser with that real runtime.
 
+
+
+## QORVYNT character authoring foundation
+
+`world/character_animation.qv` is the first executable QORVYNT-authored character rig and animation profile manifest. It defines a humanoid bone map plus idle, walk, run, jump, and pulse-attack clip parameters using QORVYNT maps. This establishes language-owned character data rather than hard-coding every profile in JavaScript. The current Genesis page does not yet load or execute this file, and the procedural player/NPC meshes are not skeletal animated characters. The next gate is a tested QORVYNT-to-Three.js adapter that consumes verified QVM output and maps these profiles onto a real rig; until that exists, this manifest is authoring groundwork, not a live animation feature.
