@@ -62,7 +62,7 @@ export async function loadQorvyntGLTFCharacter(THREE, url, options = {}) {
     throw new TypeError("QORVYNT GLTF pipeline requires Three.js Group, AnimationMixer, Box3 and Vector3");
   }
   assertAssetUrl(url);
-  const GLTFLoader = await importGLTFLoader();
+  const GLTFLoader = options.GLTFLoader || await importGLTFLoader();
   const loader = new GLTFLoader();
   const gltf = await loader.loadAsync(url, options.onProgress);
   const model = gltf.scene || gltf.scenes?.[0];
