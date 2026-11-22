@@ -21,7 +21,7 @@ function assertAssetUrl(url) {
 async function importGLTFLoader() {
   const sources = [
     "https://esm.sh/three@0.160.0/examples/jsm/loaders/GLTFLoader.js",
-    "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js"
+    "https://esm.sh/three@0.160.0/examples/jsm/loaders/GLTFLoader.js?bundle"
   ];
   let lastError;
   for (const source of sources) {
