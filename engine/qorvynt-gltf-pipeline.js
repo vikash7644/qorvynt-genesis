@@ -14,7 +14,7 @@ function normalizeName(value) {
 
 function assertAssetUrl(url) {
   if (typeof url !== "string" || !/^https?:\/\//i.test(url)) {
-    throw new TypeError("QORVYNT character asset URL must be an absolute HTTP(S) URL");
+    throw new TypeError("QORVYNT character asset URL must be HTTP(S) or a local browser Blob URL");
   }
 }
 
