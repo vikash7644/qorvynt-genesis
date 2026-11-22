@@ -4,13 +4,19 @@
 # profiles are not yet live skeletal animations in the browser game.
 
 define humanoid_rig := map(
-    "root", "hips",
-    "spine", "spine",
-    "head", "head",
-    "left_arm", "arm_l",
-    "right_arm", "arm_r",
-    "left_leg", "leg_l",
-    "right_leg", "leg_r"
+    "root", "Hips",
+    "spine", "Spine",
+    "head", "Head",
+    "left_arm", "LeftUpperArm",
+    "right_arm", "RightUpperArm",
+    "left_forearm", "LeftForearm",
+    "right_forearm", "RightForearm",
+    "left_leg", "LeftUpperLeg",
+    "right_leg", "RightUpperLeg",
+    "left_shin", "LeftLowerLeg",
+    "right_shin", "RightLowerLeg",
+    "left_foot", "LeftFoot",
+    "right_foot", "RightFoot"
 )
 
 define idle_clip := map("name", "idle", "loop", 1, "duration_ms", 1800, "root_bob", 2, "spine_sway", 3, "arm_swing", 2, "leg_swing", 1)
@@ -21,6 +27,9 @@ define attack_clip := map("name", "pulse_attack", "loop", 0, "duration_ms", 520,
 
 define explorer_character := map(
     "id", "genesis_explorer",
+    "rig_version", 1,
+    "coordinate_system", "right_handed_y_up",
+    "skeleton_type", "hierarchical_bone_rig",
     "rig", humanoid_rig,
     "idle", idle_clip,
     "walk", walk_clip,
