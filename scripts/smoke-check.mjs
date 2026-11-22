@@ -8,8 +8,10 @@ const html = readFileSync("index.html", "utf8");
 const characterSource = readFileSync("world/character_animation.qv", "utf8");
 const characterRuntime = readFileSync("engine/qorvynt-character-runtime.js", "utf8");
 const gltfPipeline = readFileSync("engine/qorvynt-gltf-pipeline.js", "utf8");
+const characterLab = readFileSync("character-lab.html", "utf8");
 for (const marker of ["createQorvyntCharacter", "AnimationMixer", "LeftUpperLeg", "RightUpperLeg", "LeftUpperArm", "RightUpperArm", '"idle"', '"walk"', '"run"', '"jump"', '"attack"', "crossFadeFrom", "qorvyntRig"]) assert.ok(characterRuntime.includes(marker), "Missing character runtime feature: " + marker);
 for (const marker of ["loadQorvyntGLTFCharacter", "GLTFLoader", "isSkinnedMesh", "skeleton.bones", "clipAliases", "crossFadeFrom", "disposeObject", "glTF 2.0"]) assert.ok(gltfPipeline.includes(marker), "Missing GLTF pipeline feature: " + marker);
+for (const marker of ['accept=".glb', 'loadQorvyntGLTFCharacter', 'createObjectURL', 'Auto rotate', 'ANIMATION STATES', 'not uploaded to a server']) assert.ok(characterLab.includes(marker), "Missing character lab feature: " + marker);
 for (const marker of ["humanoid_rig", "idle_clip", "walk_clip", "run_clip", "jump_clip", "attack_clip", "explorer_character"]) assert.ok(characterSource.includes(marker), "Missing QORVYNT character authoring marker: " + marker);
 for (const id of ["game", "begin", "scan", "jump", "touch", "count", "state", "hostiles", "healthFill", "staminaFill", "attack", "drive", "minimap", "minimapCanvas", "objectiveReadout", "credits", "shopToggle", "shopPanel", "shopCredits", "buyMedkit", "buyPulse", "buyArmor", "shopClose"]) {
   assert.match(html, new RegExp('id="' + id + '"'), "Missing required UI element: " + id);
@@ -21,6 +23,14 @@ for (const feature of [
 ]) {
   assert.ok(html.includes(feature), "Missing game feature marker: " + feature);
 }
+const labModuleStart = characterLab.indexOf('<script type="module">');
+const labModuleEnd = characterLab.indexOf("</script>", labModuleStart);
+assert.ok(labModuleStart >= 0 && labModuleEnd > labModuleStart, "Could not find character lab module script");
+const labModuleTemp = join(tmpdir(), "qorvynt-character-lab-check.mjs");
+writeFileSync(labModuleTemp, characterLab.slice(labModuleStart + '<script type="module">'.length, labModuleEnd));
+const labModuleCheck = spawnSync(process.execPath, ["--check", labModuleTemp], { encoding: "utf8" });
+unlinkSync(labModuleTemp);
+assert.equal(labModuleCheck.status, 0, labModuleCheck.stderr || "Character lab JavaScript syntax check failed");
 const gltfTemp = join(tmpdir(), "qorvynt-gltf-pipeline-check.mjs");
 writeFileSync(gltfTemp, gltfPipeline);
 const gltfCheck = spawnSync(process.execPath, ["--check", gltfTemp], { encoding: "utf8" });
