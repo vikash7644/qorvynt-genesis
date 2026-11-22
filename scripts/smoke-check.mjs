@@ -51,4 +51,6 @@ writeFileSync(temp, moduleSource);
 const check = spawnSync(process.execPath, ["--check", temp], { encoding: "utf8" });
 unlinkSync(temp);
 assert.equal(check.status, 0, check.stderr || "JavaScript syntax check failed");
+const gltfTests = spawnSync(process.execPath, ["scripts/gltf-pipeline.test.mjs"], { encoding: "utf8" });
+assert.equal(gltfTests.status, 0, gltfTests.stderr || gltfTests.stdout || "GLTF pipeline unit tests failed");
 console.log("QORVYNT Genesis smoke checks passed.");
