@@ -15,6 +15,6 @@ define explorer_character := map("id", "genesis_explorer", "rig_version", 1, "co
 
 show explorer_character
 
-define explorer_asset_pipeline := map("format", "glb", "specification", "gltf_2_0", "requires_skinned_mesh", true, "target_height", 3, "idle_clip", "idle", "walk_clip", "walk", "run_clip", "run", "jump_clip", "jump", "attack_clip", "attack")
+define explorer_asset_pipeline := map("format", "glb", "specification", "gltf_2_0", "requires_skinned_mesh", true, "target_height", 3, "idle_clip", "idle", "walk_clip", "walk", "run_clip", "run", "jump_clip", "jump", "attack_clip", "attack", "required_bones", ["Hips", "Spine", "Head", "LeftUpperArm", "RightUpperArm", "LeftUpperLeg", "RightUpperLeg"], "clip_aliases", map("idle", ["idle", "stand", "breathing"], "walk", ["walk", "walking", "locomotion_walk"], "run", ["run", "running", "sprint"], "jump", ["jump", "jump_start", "leap"], "attack", ["attack", "pulse_attack", "melee", "strike"]))
 
 show explorer_asset_pipeline

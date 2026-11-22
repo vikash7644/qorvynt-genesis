@@ -1,0 +1,17 @@
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { parseQorvyntAuthoring, loadQorvyntCharacterProfile } from "../engine/qorvynt-authoring.js";
+const source=readFileSync("world/character_animation.qv","utf8");
+const parsed=parseQorvyntAuthoring(source);
+const profile=loadQorvyntCharacterProfile(source);
+assert.equal(profile.asset.format,"glb");
+assert.equal(profile.asset.target_height,3);
+assert.equal(profile.asset.requires_skinned_mesh,true);
+assert.ok(profile.asset.required_bones.includes("Hips"));
+assert.ok(profile.asset.required_bones.includes("LeftUpperLeg"));
+assert.deepEqual(profile.asset.clip_aliases.attack,["attack","pulse_attack","melee","strike"]);
+assert.equal(profile.character.id,"genesis_explorer");
+assert.ok(parsed.shown.includes("explorer_character"));
+assert.throws(()=>parseQorvyntAuthoring('define a := map("x", unknown_value)'),/Unknown QORVYNT authoring value/);
+assert.throws(()=>loadQorvyntCharacterProfile('define explorer_character := map("id", "x")\ndefine explorer_asset_pipeline := map("format", "glb")'),/Unsupported QORVYNT character asset format|requires_skinned_mesh/);
+console.log("QORVYNT authoring tests passed: source maps, references, arrays, validation and GLB runtime profile.");
