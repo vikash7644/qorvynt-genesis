@@ -12,7 +12,7 @@
 <div id="game"></div>
 <div id="hud">
  <div class="top">
-  <div class="brand"><strong>QORVYNT</strong><span>GENESIS // FIELD LOG 001</span></div>
+  <div class="brand"><strong>QORVYNT</strong><span>GENESIS // FIELD LOG 001</span><span id="worldConnection" style="display:block;margin-top:5px;color:#f5c96b;font-size:9px;letter-spacing:.12em">WORLD SERVER · CONNECTING</span></div>
   <div class="mission"><b id="missionTitle">FIRST CONTACT</b><p id="missionText">Locate the scattered Genesis fragments. The signal is coming from the ruins.</p><small id="objectiveReadout" class="objective-readout">OBJECTIVE · SEARCH THE FRONTIER</small></div>
  </div>
  <div class="bottom">
@@ -129,6 +129,30 @@ function makeSettler(info,index){
  return {...info,root,legs,home:new THREE.Vector3(info.home[0],0,info.home[1]),target:new THREE.Vector3(info.home[0],0,info.home[1]),state:"SETTLING IN",energy:75,nextDecision:index*.7,phase:index*1.8,speed:1.15};
 }
 for(let i=0;i<settlerLooks.length;i++)settlers.push(makeSettler(settlerLooks[i],i));
+const worldConnection=document.querySelector('#worldConnection');
+let remoteWorld=null;
+async function syncGenesisWorld(){
+ try{
+  const response=await fetch('https://qorvynt-genesis-server.vercel.app/api/world',{cache:'no-store'});
+  if(!response.ok)throw new Error('HTTP '+response.status);
+  const data=await response.json();
+  if(data.worldId!=='genesis-frontier'||!Array.isArray(data.npcs))throw new Error('Invalid world response');
+  remoteWorld=data;
+  for(const npc of data.npcs){
+   const local=settlers.find(n=>n.name.toLowerCase()===String(npc.name).toLowerCase());
+   if(local){local.role=String(npc.role||local.role).toUpperCase();local.serverRoutine=Array.isArray(npc.routine)?npc.routine:[]}
+  }
+  worldConnection.textContent='WORLD SERVER · ONLINE · '+data.cycle.toUpperCase();
+  worldConnection.style.color='#75f2e4';
+  document.querySelector('#missionTitle').textContent='EMBERFALL · '+data.settlements[0].name.toUpperCase();
+ }catch(error){
+  worldConnection.textContent='WORLD SERVER · OFFLINE · LOCAL SIM';
+  worldConnection.style.color='#f5c96b';
+ }
+}
+syncGenesisWorld();
+setInterval(syncGenesisWorld,60000);
+
 function decideSettler(n,t){
  const nearby=enemies.filter(e=>e.hp>0&&e.mesh.position.distanceTo(n.root.position)<15);
  if(nearby.length){n.state="TAKING COVER";const threat=nearby[0].mesh.position;n.target.set(n.root.position.x+(n.root.position.x-threat.x)*2,0,n.root.position.z+(n.root.position.z-threat.z)*2);return}
