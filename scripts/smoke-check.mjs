@@ -5,6 +5,8 @@ import { spawnSync } from "node:child_process";
 import assert from "node:assert/strict";
 
 const html = readFileSync("index.html", "utf8");
+const characterSource = readFileSync("world/character_animation.qv", "utf8");
+for (const marker of ["humanoid_rig", "idle_clip", "walk_clip", "run_clip", "jump_clip", "attack_clip", "explorer_character"]) assert.ok(characterSource.includes(marker), "Missing QORVYNT character authoring marker: " + marker);
 for (const id of ["game", "begin", "scan", "jump", "touch", "count", "state", "hostiles", "healthFill", "staminaFill", "attack", "drive", "minimap", "minimapCanvas", "objectiveReadout", "credits", "shopToggle", "shopPanel", "shopCredits", "buyMedkit", "buyPulse", "buyArmor", "shopClose"]) {
   assert.match(html, new RegExp('id="' + id + '"'), "Missing required UI element: " + id);
 }
