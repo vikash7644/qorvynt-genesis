@@ -1,5 +1,5 @@
 # QORVYNT: Genesis — first character animation authoring manifest
-# Executable QORVYNT data using the current map/array value model.
+# Executable QORVYNT data using the currently supported map literal syntax.
 # Genesis reads this source profile to configure the live GLB character importer.
 # The browser reader supports the define/map/array authoring subset, not QVM bytecode.
 
@@ -15,6 +15,6 @@ define explorer_character := map("id", "genesis_explorer", "rig_version", 1, "co
 
 show explorer_character
 
-define explorer_asset_pipeline := map("format", "glb", "specification", "gltf_2_0", "requires_skinned_mesh", true, "target_height", 3, "idle_clip", "idle", "walk_clip", "walk", "run_clip", "run", "jump_clip", "jump", "attack_clip", "attack", "required_bones", ["Hips", "Spine", "Head", "LeftUpperArm", "RightUpperArm", "LeftUpperLeg", "RightUpperLeg"], "clip_aliases", map("idle", ["idle", "stand", "breathing"], "walk", ["walk", "walking", "locomotion_walk"], "run", ["run", "running", "sprint"], "jump", ["jump", "jump_start", "leap"], "attack", ["attack", "pulse_attack", "melee", "strike"]))
+define explorer_asset_pipeline := map("format", "glb", "specification", "gltf_2_0", "requires_skinned_mesh", true, "target_height", 3, "idle_clip", "idle", "walk_clip", "walk", "run_clip", "run", "jump_clip", "jump", "attack_clip", "attack", "required_bones", map("bone_0", "Hips", "bone_1", "Spine", "bone_2", "Head", "bone_3", "LeftUpperArm", "bone_4", "RightUpperArm", "bone_5", "LeftUpperLeg", "bone_6", "RightUpperLeg"), "clip_aliases", map("idle", map("primary", "idle", "alternate_1", "stand", "alternate_2", "breathing"), "walk", map("primary", "walk", "alternate_1", "walking", "alternate_2", "locomotion_walk"), "run", map("primary", "run", "alternate_1", "running", "alternate_2", "sprint"), "jump", map("primary", "jump", "alternate_1", "jump_start", "alternate_2", "leap"), "attack", map("primary", "attack", "alternate_1", "pulse_attack", "alternate_2", "melee", "alternate_3", "strike")))
 
 show explorer_asset_pipeline

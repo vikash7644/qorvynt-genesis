@@ -10,6 +10,7 @@ assert.equal(profile.asset.requires_skinned_mesh,true);
 assert.ok(profile.asset.required_bones.includes("Hips"));
 assert.ok(profile.asset.required_bones.includes("LeftUpperLeg"));
 assert.deepEqual(profile.asset.clip_aliases.attack,["attack","pulse_attack","melee","strike"]);
+assert.ok(!source.includes("["), "The QORVYNT compiler profile must stay within its supported map literal syntax.");
 assert.equal(profile.character.id,"genesis_explorer");
 assert.ok(parsed.shown.includes("explorer_character"));
 assert.throws(()=>parseQorvyntAuthoring('define a := map("x", unknown_value)'),/Unknown QORVYNT authoring value/);

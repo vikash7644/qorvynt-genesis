@@ -112,10 +112,16 @@ export function loadQorvyntCharacterProfile(source) {
   if (asset.format !== "glb" || asset.specification !== "gltf_2_0") throw new Error("Unsupported QORVYNT character asset format");
   if (asset.requires_skinned_mesh !== true) throw new Error("QORVYNT character profile must require a skinned mesh");
   if (!Number.isFinite(asset.target_height) || asset.target_height <= 0) throw new Error("QORVYNT target_height must be positive");
-  if (!Array.isArray(asset.required_bones) || !asset.required_bones.length) throw new Error("QORVYNT required_bones must be a non-empty array");
+  const requiredBones = Array.isArray(asset.required_bones) ? asset.required_bones : Object.values(asset.required_bones || {});
+  if (!requiredBones.length || requiredBones.some((bone) => typeof bone !== "string" || !bone)) throw new Error("QORVYNT required_bones must be a non-empty map of bone names");
   if (!asset.clip_aliases || typeof asset.clip_aliases !== "object") throw new Error("QORVYNT clip_aliases map is required");
+  const clipAliases = {};
   for (const state of ["idle", "walk", "run", "jump", "attack"]) {
-    if (!Array.isArray(asset.clip_aliases[state]) || !asset.clip_aliases[state].length) throw new Error("QORVYNT clip aliases missing for " + state);
+    const authored = asset.clip_aliases[state];
+    const candidates = Array.isArray(authored) ? authored : Object.values(authored || {});
+    if (!candidates.length || candidates.some((name) => typeof name !== "string" || !name)) throw new Error("QORVYNT clip aliases missing for " + state);
+    clipAliases[state] = Object.freeze(candidates);
   }
-  return Object.freeze({ character, asset });
+  const normalizedAsset = Object.freeze({ ...asset, required_bones: Object.freeze(requiredBones), clip_aliases: Object.freeze(clipAliases) });
+  return Object.freeze({ character, asset: normalizedAsset });
 }
