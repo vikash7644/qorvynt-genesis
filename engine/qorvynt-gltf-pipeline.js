@@ -13,7 +13,7 @@ function normalizeName(value) {
 }
 
 function assertAssetUrl(url) {
-  if (typeof url !== "string" || !/^https?:\/\//i.test(url)) {
+  if (typeof url !== "string" || !/^(https?:\/\/|blob:)/i.test(url)) {
     throw new TypeError("QORVYNT character asset URL must be HTTP(S) or a local browser Blob URL");
   }
 }
