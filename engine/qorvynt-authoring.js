@@ -122,6 +122,13 @@ export function loadQorvyntCharacterProfile(source) {
     if (!candidates.length || candidates.some((name) => typeof name !== "string" || !name)) throw new Error("QORVYNT clip aliases missing for " + state);
     clipAliases[state] = Object.freeze(candidates);
   }
+  const authoredDimensions = character.dimensions || {};
+  const normalizedDimensions = {};
+  for (const [name, value] of Object.entries(authoredDimensions)) {
+    if (!Number.isInteger(value)) throw new Error("QORVYNT dimension " + name + " must be an integer in hundredths of a world unit");
+    normalizedDimensions[name] = value / 100;
+  }
+  const normalizedCharacter = Object.freeze({ ...character, dimensions: Object.freeze(normalizedDimensions) });
   const normalizedAsset = Object.freeze({ ...asset, required_bones: Object.freeze(requiredBones), clip_aliases: Object.freeze(clipAliases) });
-  return Object.freeze({ character, asset: normalizedAsset });
+  return Object.freeze({ character: normalizedCharacter, asset: normalizedAsset });
 }
