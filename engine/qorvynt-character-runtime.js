@@ -115,8 +115,8 @@ export function createQorvyntCharacter(THREE, options = {}) {
   let active = null;
   const play = (name, fade = 0.16) => {
     const next = actions.get(name);
-    if (!next || active === name) return false;
-    const previous = active ? actions.get(active) : null;
+    if (!next || (active === name && next.isRunning())) return false;
+    const previous = active && active !== name ? actions.get(active) : null;
     next.reset().play();
     if (previous) next.crossFadeFrom(previous, fade, true);
     active = name;
