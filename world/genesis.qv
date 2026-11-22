@@ -1,5 +1,5 @@
-# QORVYNT Genesis gameplay rules
-# This file mirrors the embedded rules block consumed by the browser bridge.
+# QORVYNT Genesis gameplay and autonomous survivor rules
+# Typed definitions consumed by the browser QORVYNT rules bridge.
 define fragment_reward := 75
 define drone_reward := 50
 define drone_loot_reward := 35
@@ -8,3 +8,13 @@ define warden_core_loot_reward := 250
 define medkit_cost := 60
 define pulse_amplifier_cost := 180
 define armor_cost := 150
+
+# Autonomous Emberfall survivor decision labels
+define npc_mira := "CHECKING SUPPLIES"
+define npc_kael := "SCOUTING THE PERIMETER"
+define npc_orin := "REPAIRING EQUIPMENT"
+define npc_sera := "STUDYING OLD RECORDS"
+define npc_night := "GATHERING AT CAMP"
+define npc_threat := "TAKING COVER"
+define npc_player := "WATCHING EXPLORER"
+define npc_tired := "RESTING"
