@@ -7,7 +7,7 @@ function tokenize(source) {
     const char = source[i];
     if (/\s/.test(char)) { i++; continue; }
     if (char === "#") { while (i < source.length && source[i] !== "\n") i++; continue; }
-    if ('(),[]'.includes(char)) { tokens.push(char); i++; continue; }
+    if ('(),[]'.includes(char)) { tokens.push({ punctuation: char }); i++; continue; }
     if (char === '"') {
       const start = i++;
       let escaped = false;
@@ -36,16 +36,17 @@ function parseExpression(tokens, environment) {
   const peek = () => tokens[cursor];
   const take = () => tokens[cursor++];
   const expect = (value) => {
-    if (take() !== value) throw new SyntaxError("Expected '" + value + "' in QORVYNT authoring expression");
+    const token = take();
+    if (token?.punctuation !== value) throw new SyntaxError("Expected '" + value + "' in QORVYNT authoring expression");
   };
   function value() {
     const token = take();
     if (typeof token === "string" || typeof token === "number") return token;
     if (token === "[") {
       const items = [];
-      while (peek() !== "]") {
+      while (peek()?.punctuation !== "]") {
         items.push(value());
-        if (peek() !== "]") expect(",");
+        if (peek()?.punctuation !== "]") expect(",");
       }
       expect("]");
       return items;
@@ -57,12 +58,12 @@ function parseExpression(tokens, environment) {
       if (name === "map") {
         expect("(");
         const result = {};
-        while (peek() !== ")") {
+        while (peek()?.punctuation !== ")") {
           const key = value();
           if (typeof key !== "string") throw new SyntaxError("QORVYNT map keys must be strings");
           expect(",");
           result[key] = value();
-          if (peek() !== ")") expect(",");
+          if (peek()?.punctuation !== ")") expect(",");
         }
         expect(")");
         return result;
