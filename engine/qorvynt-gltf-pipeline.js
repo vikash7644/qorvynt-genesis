@@ -119,7 +119,9 @@ export async function loadQorvyntGLTFCharacter(THREE, url, options = {}) {
   const actions = new Map();
   for (const [semantic, candidates] of Object.entries(aliases)) {
     const names = [semantic, ...(Array.isArray(candidates) ? candidates : [candidates])];
-    const match = names.map(normalizeName).map((name) => sourceClips.get(name)).find(Boolean);
+    const normalizedCandidates = names.map(normalizeName);
+    const match = normalizedCandidates.map((name) => sourceClips.get(name)).find(Boolean)
+      || [...sourceClips.entries()].find(([sourceName]) => normalizedCandidates.some((candidate) => candidate.length > 2 && sourceName.includes(candidate)))?.[1];
     if (match) {
       clips.set(semantic, match);
       actions.set(semantic, mixer.clipAction(match));
