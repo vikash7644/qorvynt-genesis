@@ -99,3 +99,6 @@ The world rules file lives at `world/genesis.qv`. The browser currently reads a 
 ## Standards-based character asset pipeline
 
 `engine/qorvynt-gltf-pipeline.js` adds a GLTF/GLB import path for externally authored or motion-capture-ready character assets. It validates that an imported model contains a skinned mesh, records its skeleton bone names, normalizes model height/origin, discovers semantic idle/walk/run/jump/attack clips, supports clip-name aliases, cross-fades between available clips, and disposes GPU resources. This is an engine module, not yet the active Genesis player asset: no licensed production character model is bundled, and the current player continues to use the procedural QORVYNT rig until a compatible GLB is selected and browser-tested.
+
+- Browser-based GLB preview and validation lab: [Open QORVYNT Character Lab](https://vikash7644.github.io/qorvynt-genesis/character-lab.html). Select a local rigged GLB from a desktop or Android browser; the asset stays in the browser and is not uploaded.
+- QORVYNT source profile: `world/character_animation.qv` now also declares the GLB 2.0 asset contract and semantic animation names. The runtime still consumes its JavaScript adapter contract rather than parsing QVM output directly.
