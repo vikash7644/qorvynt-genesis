@@ -6,6 +6,8 @@ import assert from "node:assert/strict";
 
 const html = readFileSync("index.html", "utf8");
 const characterSource = readFileSync("world/character_animation.qv", "utf8");
+const characterRuntime = readFileSync("engine/qorvynt-character-runtime.js", "utf8");
+for (const marker of ["createQorvyntCharacter", "AnimationMixer", "LeftUpperLeg", "RightUpperLeg", "LeftUpperArm", "RightUpperArm", '"idle"', '"walk"', '"run"', '"jump"', '"attack"', "crossFadeFrom", "qorvyntRig"]) assert.ok(characterRuntime.includes(marker), "Missing character runtime feature: " + marker);
 for (const marker of ["humanoid_rig", "idle_clip", "walk_clip", "run_clip", "jump_clip", "attack_clip", "explorer_character"]) assert.ok(characterSource.includes(marker), "Missing QORVYNT character authoring marker: " + marker);
 for (const id of ["game", "begin", "scan", "jump", "touch", "count", "state", "hostiles", "healthFill", "staminaFill", "attack", "drive", "minimap", "minimapCanvas", "objectiveReadout", "credits", "shopToggle", "shopPanel", "shopCredits", "buyMedkit", "buyPulse", "buyArmor", "shopClose"]) {
   assert.match(html, new RegExp('id="' + id + '"'), "Missing required UI element: " + id);
@@ -17,6 +19,11 @@ for (const feature of [
 ]) {
   assert.ok(html.includes(feature), "Missing game feature marker: " + feature);
 }
+const runtimeTemp = join(tmpdir(), "qorvynt-character-runtime-check.mjs");
+writeFileSync(runtimeTemp, characterRuntime);
+const runtimeCheck = spawnSync(process.execPath, ["--check", runtimeTemp], { encoding: "utf8" });
+unlinkSync(runtimeTemp);
+assert.equal(runtimeCheck.status, 0, runtimeCheck.stderr || "Character runtime JavaScript syntax check failed");
 const openTag = '<script type="module">';
 const start = html.indexOf(openTag);
 const end = html.indexOf("</script>", start + openTag.length);
