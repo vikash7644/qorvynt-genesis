@@ -11,7 +11,9 @@ define run_clip := map("name", "run", "loop", 1, "duration_ms", 460, "root_bob",
 define jump_clip := map("name", "jump", "loop", 0, "duration_ms", 680, "root_bob", 32, "spine_sway", 8, "arm_swing", 36, "leg_swing", 22)
 define attack_clip := map("name", "pulse_attack", "loop", 0, "duration_ms", 520, "root_bob", 4, "spine_sway", 18, "arm_swing", 58, "leg_swing", 12)
 
-define explorer_character := map("id", "genesis_explorer", "rig_version", 1, "coordinate_system", "right_handed_y_up", "skeleton_type", "hierarchical_bone_rig", "rig", humanoid_rig, "idle", idle_clip, "walk", walk_clip, "run", run_clip, "jump", jump_clip, "attack", attack_clip)
+define humanoid_dimensions := map("hips_height", 1.0, "spine_height", 0.12, "head_radius", 0.34, "chest_radius", 0.37, "chest_length", 0.76, "arm_span", 0.42, "upper_arm_radius", 0.14, "upper_arm_length", 0.52, "forearm_radius", 0.12, "forearm_length", 0.48, "leg_span", 0.2, "upper_leg_radius", 0.17, "upper_leg_length", 0.58, "lower_leg_radius", 0.13, "lower_leg_length", 0.55, "foot_width", 0.28, "foot_height", 0.16, "foot_depth", 0.42)
+
+define explorer_character := map("id", "genesis_explorer", "rig_version", 2, "dimensions", humanoid_dimensions, "coordinate_system", "right_handed_y_up", "skeleton_type", "hierarchical_bone_rig", "rig", humanoid_rig, "idle", idle_clip, "walk", walk_clip, "run", run_clip, "jump", jump_clip, "attack", attack_clip)
 
 show explorer_character
 

@@ -67,7 +67,7 @@ const coreRing=new THREE.Mesh(new THREE.TorusGeometry(3,.18,12,48),glow);coreRin
 const fragments=[];const fragPositions=[[-17,0,-13],[37,0,15],[-44,0,35],[4,0,62],[61,0,-48]];
 for(const [x,y,z] of fragPositions){const group=new THREE.Group();const crystal=new THREE.Mesh(new THREE.OctahedronGeometry(1.05,.2),glow);crystal.scale.y=1.7;crystal.castShadow=true;group.add(crystal);const ring=new THREE.Mesh(new THREE.TorusGeometry(1.5,.045,8,32),glow);ring.rotation.x=Math.PI/2;group.add(ring);group.position.set(x,2,z);scene.add(group);fragments.push({group,got:false})}
 // QORVYNT-authored character runtime adapter: named hierarchical bones + cross-faded animation clips.
-const character=createQorvyntCharacter(THREE,{name:"GenesisExplorer"});
+const characterProfile=await qorvyntCharacterProfilePromise;const character=createQorvyntCharacter(THREE,{name:"GenesisExplorer",profile:characterProfile.character});
 const player=character.root;player.position.set(0,0,0);scene.add(player);
 let activeCharacter=character,externalCharacter=null,externalCharacterUrl=null,proceduralCharacterDisposed=false;
 const characterFileInput=document.createElement("input");characterFileInput.type="file";characterFileInput.accept=".glb,model/gltf-binary";characterFileInput.hidden=true;document.body.appendChild(characterFileInput);

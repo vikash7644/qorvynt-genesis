@@ -107,3 +107,5 @@ The world rules file lives at `world/genesis.qv`. The browser currently reads a 
 - The original procedural explorer remains the default if no custom GLB is selected. A GLB without a skinned mesh or recognized animation clips is rejected with an in-game diagnostic.
 
 - **QORVYNT source now configures the live character importer:** `world/character_animation.qv` is fetched by the game, parsed by the limited Genesis authoring reader (`define` + `map` + arrays), and supplies required bones, GLB target height and semantic animation aliases to the GLTF runtime. This is a source-authored configuration bridge, not execution of QVM bytecode in the browser.
+
+- The procedural explorer now consumes the same QORVYNT source profile: named rig bones, body dimensions, and idle/walk/run/jump/attack durations and motion amplitudes are read from `explorer_character` before the model is built. Three.js still renders the generated geometry and evaluates the keyframe tracks; QORVYNT owns the authored rig and motion parameters.
