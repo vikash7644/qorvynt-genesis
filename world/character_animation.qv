@@ -1,7 +1,7 @@
 # QORVYNT: Genesis — first character animation authoring manifest
 # Executable QORVYNT data using the current map/array value model.
-# The Three.js skeleton adapter is a future integration milestone; these
-# profiles are not yet live skeletal animations in the browser game.
+# Browser runtime and GLB import adapter now exist; this QORVYNT profile is
+# still a source-authored contract, not yet the runtime's parsed input.
 
 define humanoid_rig := map("root", "Hips", "spine", "Spine", "head", "Head", "left_arm", "LeftUpperArm", "right_arm", "RightUpperArm", "left_forearm", "LeftForearm", "right_forearm", "RightForearm", "left_leg", "LeftUpperLeg", "right_leg", "RightUpperLeg", "left_shin", "LeftLowerLeg", "right_shin", "RightLowerLeg", "left_foot", "LeftFoot", "right_foot", "RightFoot")
 
@@ -14,3 +14,7 @@ define attack_clip := map("name", "pulse_attack", "loop", 0, "duration_ms", 520,
 define explorer_character := map("id", "genesis_explorer", "rig_version", 1, "coordinate_system", "right_handed_y_up", "skeleton_type", "hierarchical_bone_rig", "rig", humanoid_rig, "idle", idle_clip, "walk", walk_clip, "run", run_clip, "jump", jump_clip, "attack", attack_clip)
 
 show explorer_character
+
+define explorer_asset_pipeline := map("format", "glb", "specification", "gltf_2_0", "requires_skinned_mesh", true, "target_height", 3, "idle_clip", "idle", "walk_clip", "walk", "run_clip", "run", "jump_clip", "jump", "attack_clip", "attack")
+
+show explorer_asset_pipeline
