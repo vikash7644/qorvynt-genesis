@@ -42,7 +42,7 @@ function parseExpression(tokens, environment) {
   function value() {
     const token = take();
     if (typeof token === "string" || typeof token === "number") return token;
-    if (token === "[") {
+    if (token?.punctuation === "[") {
       const items = [];
       while (peek()?.punctuation !== "]") {
         items.push(value());
