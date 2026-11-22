@@ -31,6 +31,16 @@ jobs:
           node-version: 22
       - name: Run game smoke checks
         run: node scripts/smoke-check.mjs
+      - name: Check out QORVYNT compiler
+        uses: actions/checkout@v4
+        with:
+          repository: vikash7644/zenvora-lang
+          path: qorvynt-lang
+      - name: Compile and execute the character authoring source with QVM
+        run: |
+          cargo build --manifest-path qorvynt-lang/Cargo.toml --release
+          qorvynt-lang/target/release/qorvynt --qvm-compile world/character_animation.qv /tmp/genesis-character.qvmb
+          qorvynt-lang/target/release/qorvynt --qvm-run /tmp/genesis-character.qvmb
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
