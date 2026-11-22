@@ -79,3 +79,10 @@ Progress is saved locally in the browser using `localStorage`: Genesis Credits, 
 - Defeating the Ancient Warden creates a rare Genesis Core cache worth **250 GC**, in addition to the 500 GC boss reward.
 - Uncollected drops are restored after a reload. Collected drop IDs are saved locally so recovered caches do not respawn on the same browser/device.
 - Loot locations appear on the frontier minimap. These are fictional in-game rewards with no real-money value.
+
+## QORVYNT gameplay rules bridge
+
+The world rules file lives at `world/genesis.qv`. The browser currently reads a deliberately small, embedded rules format through `loadQorvyntRules()`: `define name := number` and `define name := "text"`. Game reward/shop constants and Emberfall survivor decision labels are declared there and consumed by the browser bridge.
+
+**Important implementation boundary:** this is an early QORVYNT rules bridge, not the full QORVYNT compiler, bytecode VM, or self-hosted runtime. The `.qv` file is not yet compiled by the language toolchain in this game. The smoke check verifies required integration markers and JavaScript syntax; it does not prove runtime behavior on every Android device. The next integration milestone is to export a stable compiler/runtime interface from the separate QORVYNT language project and replace this small parser with that real runtime.
+
