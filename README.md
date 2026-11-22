@@ -102,3 +102,6 @@ The world rules file lives at `world/genesis.qv`. The browser currently reads a 
 
 - Browser-based GLB preview and validation lab: [Open QORVYNT Character Lab](https://vikash7644.github.io/qorvynt-genesis/character-lab.html). Select a local rigged GLB from a desktop or Android browser; the asset stays in the browser and is not uploaded.
 - QORVYNT source profile: `world/character_animation.qv` now also declares the GLB 2.0 asset contract and semantic animation names. The runtime still consumes its JavaScript adapter contract rather than parsing QVM output directly.
+
+- Main Genesis gameplay now has a **CHARACTER** control: after entering the frontier, choose a local rigged GLB and replace the procedural explorer. The imported model receives the same movement, jump and attack state requests; available GLB clips are cross-faded by the runtime. The file remains a local browser Blob and is not sent to the backend.
+- The original procedural explorer remains the default if no custom GLB is selected. A GLB without a skinned mesh or recognized animation clips is rejected with an in-game diagnostic.
