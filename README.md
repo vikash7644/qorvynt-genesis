@@ -94,3 +94,8 @@ The world rules file lives at `world/genesis.qv`. The browser currently reads a 
 - The Genesis player controller now selects those animation states from movement, sprint and jump state; combat requests the attack clip.
 - The Pages workflow checks the runtime module's JavaScript syntax and builds the separate QORVYNT compiler, then compiles and executes `world/character_animation.qv` through the verified QVM v2 CLI before deployment.
 - **Honest boundary:** the current rig is articulated procedural geometry, not a production skinned GLTF character; the browser adapter's animation tracks are still implemented in JavaScript and do not yet consume the QVM artifact or parse the `.qv` profile. GLTF/GLB skin import, retargeting, physics integration, cinematic tools and a stable QORVYNT engine API remain future gates.
+
+
+## Standards-based character asset pipeline
+
+`engine/qorvynt-gltf-pipeline.js` adds a GLTF/GLB import path for externally authored or motion-capture-ready character assets. It validates that an imported model contains a skinned mesh, records its skeleton bone names, normalizes model height/origin, discovers semantic idle/walk/run/jump/attack clips, supports clip-name aliases, cross-fades between available clips, and disposes GPU resources. This is an engine module, not yet the active Genesis player asset: no licensed production character model is bundled, and the current player continues to use the procedural QORVYNT rig until a compatible GLB is selected and browser-tested.
