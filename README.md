@@ -88,6 +88,9 @@ The world rules file lives at `world/genesis.qv`. The browser currently reads a 
 
 
 
-## QORVYNT character authoring foundation
+## QORVYNT character runtime — first skeletal animation integration
 
-`world/character_animation.qv` is the first executable QORVYNT-authored character rig and animation profile manifest. It defines a humanoid bone map plus idle, walk, run, jump, and pulse-attack clip parameters using QORVYNT maps. This establishes language-owned character data rather than hard-coding every profile in JavaScript. The current Genesis page does not yet load or execute this file, and the procedural player/NPC meshes are not skeletal animated characters. The next gate is a tested QORVYNT-to-Three.js adapter that consumes verified QVM output and maps these profiles onto a real rig; until that exists, this manifest is authoring groundwork, not a live animation feature.
+- `engine/qorvynt-character-runtime.js` builds a named hierarchical character rig (hips, spine, head, arms, forearms, legs, shins and feet) and uses Three.js `AnimationMixer` clips with cross-fades for idle, walk, run, jump and pulse attack.
+- The Genesis player controller now selects those animation states from movement, sprint and jump state; combat requests the attack clip.
+- The Pages workflow checks the runtime module's JavaScript syntax and builds the separate QORVYNT compiler, then compiles and executes `world/character_animation.qv` through the verified QVM v2 CLI before deployment.
+- **Honest boundary:** the current rig is articulated procedural geometry, not a production skinned GLTF character; the browser adapter's animation tracks are still implemented in JavaScript and do not yet consume the QVM artifact or parse the `.qv` profile. GLTF/GLB skin import, retargeting, physics integration, cinematic tools and a stable QORVYNT engine API remain future gates.
